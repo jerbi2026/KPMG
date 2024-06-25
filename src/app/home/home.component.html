@@ -1,0 +1,129 @@
+<body>
+    <nav class="navbar bg-body-white">
+        <div class="container">
+          <a class="navbar-brand" href="#">
+            <img src="assets/logo.png" alt="logo" width="80" height="24">
+          </a>
+          JOUINI NOUR
+        </div>
+    </nav>
+    
+    <section class="inputs">
+        <form class="form">
+            <div class="title">Your data</div>
+            <label for="date_acq" class="form-label">Date d'acquisition</label>
+            <input type="date" placeholder="Date d'acquisition" class="input" id="date_acq" name="date_acq" [(ngModel)]="date_acq">
+            <label for="cout_acq" class="form-label">cout d'acquisition (DNT)</label>
+            <input type="number" placeholder="Cout d'acquisition" class="input" id="cout_acq" name="cout_acq" [(ngModel)]="cout_acq">
+            <label for="taux_amortissement" class="form-label">Taux d'amortissement (%)</label>
+            <input type="number" placeholder="Taux d'amortissement" class="input" name="taux_amort" id="taux_amortissement" [(ngModel)]="taux_amortissement" [disabled]="isTauxAmortissementDisabled"> 
+            <label for="date_rev" class="form-label">Date de reévaluation</label>
+            <select class="form-control" id="date_rev" name="date_rev" [(ngModel)]="date_rev" [disabled]="isDateRevDisabled">
+                <option value="2019">2019</option>
+                <option value="2021">2021</option>
+            </select>
+            <label for="type" class="form-label">Type d'immobilisation</label>
+            <select class="form-control" id="type" name="type" [(ngModel)]="type_immob" (change)="onTypeChange()">
+                <option value="immobilisation">immobilisation matérielle</option>
+                <option value="immeuble_batis">immeuble batis</option>
+                <option value="terrain">terrain</option>
+            </select>
+            
+             
+            <button (click)="calcul_vcn()">Submit</button>
+        </form>
+    </section>
+    <section id="resultat" style="display: none;">
+        <h3 class="text-primary">Resultat</h3>
+        <div class="table-wrapper" [hidden]="isTauxAmortissementDisabled">
+            <table class="fl-table">
+                <thead>
+                <tr>
+                    <th>Annee</th>
+                    <th>Montant d'amortissement</th>
+                    <th>Indice</th>
+                    <th>Montant réévalué</th>
+                    
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of table_rev">
+                    <td>{{item.annee}}</td>
+                    <td>{{item.montant_amortissement}}</td>
+                    <td>{{item.indice}}</td>
+                    <td>{{item.montant_rev}}</td>
+                  
+                    
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td>{{amortissement_cumule}}</td>
+                    <td>-</td>
+                    <td>{{montant_amortissement_cumule}}</td>
+                </tr>
+                
+                <tbody>
+            </table>
+        </div>
+    
+        <div class="table-wrapper">
+            <table class="fl-table">
+                <thead>
+                <tr>
+                    <th>Cout d'acquisition</th>
+                    <th>Indice</th>
+                    <th>Cout d'acquisition réévalué</th>
+                   
+                    
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{cout_acq}}</td>
+                    <td>{{indice_anne}}</td>
+                    <td>{{valeur_acquisition_rev}}</td>
+                    
+                  
+                    
+                </tr>
+               
+                
+                <tbody>
+            </table>
+        </div>
+    
+        <div class="table-wrapper">
+            <table class="fl-table">
+                <thead>
+                <tr>
+                    <th>Valeur comptable nette avant réévaluation</th>
+                    <th>Valeur comptable nette après réévaluation</th>
+                   
+                   
+                    
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{vcn}}</td>
+                    <td>{{vcn_apres_rev}}</td>
+                  
+                    
+                </tr>
+               
+                
+                <tbody>
+            </table>
+        </div>
+    
+    
+        
+       
+    
+    </section>
+    
+    
+    
+    
+    
+</body>
